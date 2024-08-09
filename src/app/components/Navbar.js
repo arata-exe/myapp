@@ -1,33 +1,36 @@
 'use client'; 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Link from 'next/link'
 
 const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand" href="/"><img src="/images/logo.png" alt="Logo" className="custom-logo" /></a>
+      <Link href="/" className="navbar-brand">
+        <img src="/images/logo.png" alt="Logo" className="custom-logo" />
+      </Link>
       <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="navbar-collapse" id="navbarNav">
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
-            <a className="nav-link" href="/">Home</a>
+            <Link href="/" className="nav-link">Home</Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/About">About</a>
+            <Link href="/About" className="nav-link">About</Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/Service">Service</a>
+            <Link href="/Service" className="nav-link">Service</Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/Contact">Contact</a>
+            <Link href="/Contact" className="nav-link">Contact</Link>
           </li>
           <li className="nav-item">
-            <a class="btn btn-outline-success" href="#">SignUp</a>
+            <Link href="/signup" className="btn btn-outline-success">SignUp</Link>
           </li>
           <li className="nav-item">
-            <a class="btn btn-success" href="#">SignIn</a>
+            <Link href="/users" className="btn btn-success">SignIn</Link>
           </li>
         </ul>
       </div>
