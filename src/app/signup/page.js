@@ -16,7 +16,7 @@ export default function Page() {
     console.log('Sending data:', data);
   
     try {
-      const res = await fetch('http://localhost:3000/api/users', {
+      const res = await fetch('https://myapp-backend-beige.vercel.app/api/users', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
