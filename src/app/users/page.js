@@ -9,7 +9,7 @@ export default function Page() {
   useEffect(() => {
     async function getUsers() {
       try {
-        const res = await fetch('https://myapp-backend-beige.vercel.app/api/users');
+        const res = await fetch('http://localhost:3000/api/users');
         if (!res.ok) {
           console.error('Failed to fetch data');
           return;
@@ -48,21 +48,15 @@ export default function Page() {
           </tr>
         </thead>
         <tbody>
-            {items.length > 0 ? (
-                items.map((item) => (
-                <tr key={item.id}>
-                    <td className='text-center'>{item.id}</td>
-                    <td>{item.firstname}</td>
-                    <td>{item.lastname}</td>
-                    <td><Link href="#" className="btn btn-warning">Edit</Link></td>
-                    <td><Link href="#" className="btn btn-danger">Delete</Link></td>
-                </tr>
-                ))
-            ) : (
-                <tr>
-                <td colSpan="5" className="text-center">No data available</td>
-                </tr>
-            )}
+          {items.map((item) => (
+            <tr key={item.id}>
+              <td className='text-center'>{item.id}</td>
+              <td>{item.firstname}</td>
+              <td>{item.lastname}</td>
+              <td><Link href={`/users/edit/${item.id}`} className="btn btn-warning">Edit</Link></td>
+              <td><Link href={`/users/del/${item.id}`} className="btn btn-danger">Del</Link></td>
+            </tr>
+          ))}
         </tbody>
 
       </table>
