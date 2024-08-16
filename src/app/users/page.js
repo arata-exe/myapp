@@ -26,6 +26,29 @@ export default function Page() {
   return () => clearInterval(interval );
 }, []);
 
+const handleDelete = async (id) => {
+  // Include the user ID in the confirmation message
+  const isConfirmed = window.confirm(`Are you sure you want to delete user ID ${id}?`);
+  if (!isConfirmed) {
+    return; // Exit the function if the user cancels
+  }
+
+  try {
+    const res = await fetch(`http://localhost:3000/api/users/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+      },
+    });
+    const result = await res.json();
+    console.log(result);
+    // Remove the deleted item from the UI
+    setItems(items.filter(item => item.id !== id));
+  } catch (error) {
+    console.error('Error deleting data:', error);
+  }
+};
+
   return (
     <>
     <Navbar />
@@ -54,7 +77,7 @@ export default function Page() {
               <td>{item.firstname}</td>
               <td>{item.lastname}</td>
               <td><Link href={`/users/edit/${item.id}`} className="btn btn-warning">Edit</Link></td>
-              <td><Link href={`/users/del/${item.id}`} className="btn btn-danger">Del</Link></td>
+              <td><button className="btn btn-pill btn-danger" type="button" onClick={() => handleDelete(item.id)}><i class="fa fa-trash"></i>Del</button></td>
             </tr>
           ))}
         </tbody>

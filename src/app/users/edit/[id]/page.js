@@ -41,8 +41,9 @@ const [items, setItems] = useState([]);
       body: JSON.stringify({ id, firstname, lastname, username, password }),
     });
 
-    const result = await res.json();
+    const result = await res.json(); 
     console.log(result);
+    
   };
 
   return (
