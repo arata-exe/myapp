@@ -1,9 +1,19 @@
-'use client'; 
+'use client';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Link from 'next/link'
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
+  const router = useRouter();
+  const token = localStorage.getItem('token'); // เช็ค token
+
+  const handleLogout = () => {
+    // ลบ token ออกจาก localStorage
+    localStorage.removeItem('token');
+    router.push('/'); // นำทางไปที่หน้า home
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link href="/" className="navbar-brand">
@@ -26,12 +36,20 @@ const Navbar = () => {
           <li className="nav-item">
             <Link href="/Contact" className="nav-link">Contact</Link>
           </li>
-          <li className="nav-item">
-            <Link href="/signup" className="btn btn-outline-success">SignUp</Link>
-          </li>
-          <li className="nav-item">
-            <Link href="#" className="btn btn-success">SignIn</Link>
-          </li>
+          {!token ? (
+            <>
+              <li className="nav-item">
+                <Link href="/signup" className="btn btn-outline-success">SignUp</Link>
+              </li>
+              <li className="nav-item">
+                <Link href="/login" className="btn btn-success">SignIn</Link>
+              </li>
+            </>
+          ) : (
+            <li className="nav-item">
+              <button onClick={handleLogout} className="btn btn-danger">Logout</button>
+            </li>
+          )}
         </ul>
       </div>
     </nav>

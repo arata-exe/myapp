@@ -45,29 +45,63 @@ export async function POST(request) {
   }
   }
 
-export async function PUT(request) {
-  try {
-  const { id, firstname, lastname, username, password  } = await request.json();
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const res = await client.query('UPDATE tbl_users SET firstname = $1, lastname = $2, username = $3, password = $4 WHERE id = $5 RETURNING *', [firstname, lastname, username, hashedPassword, id]);
-  if (res.rows.length === 0) {
-  return new Response(JSON.stringify({ error: 'User not found' }), {
-  status: 404,
-  headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' },
-  });
+  export async function PUT(request) {
+    try {
+      // รับข้อมูลจากคำขอ
+      const { id, firstname, lastname, username, password } = await request.json();
+  
+      // ตรวจสอบข้อมูลที่ได้รับ
+      if (!id || !firstname || !lastname || !username) {
+        return new Response(JSON.stringify({ error: 'Missing required fields' }), {
+          status: 400,
+          headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' },
+        });
+      }
+  
+      // Hash password ถ้ามีการส่ง password
+      const hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
+  
+      // สร้าง query สำหรับการอัปเดต
+      const updateFields = [
+        'firstname = $1',
+        'lastname = $2',
+        'username = $3',
+        hashedPassword ? 'password = $4' : ''
+      ].filter(Boolean).join(', ');
+  
+      const values = [firstname, lastname, username];
+      if (hashedPassword) values.push(hashedPassword);
+      values.push(id);
+  
+      const query = `
+        UPDATE tbl_users
+        SET ${updateFields}
+        WHERE id = $${values.length}
+        RETURNING *;
+      `;
+  
+      const res = await client.query(query, values);
+  
+      if (res.rows.length === 0) {
+        return new Response(JSON.stringify({ error: 'User not found' }), {
+          status: 404,
+          headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' },
+        });
+      }
+  
+      return new Response(JSON.stringify(res.rows[0]), {
+        status: 200,
+        headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' },
+      });
+    } catch (error) {
+      console.error('Error updating user:', error);
+      return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
+        status: 500,
+        headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' },
+      });
+    }
   }
-  return new Response(JSON.stringify(res.rows[0]), {
-  status: 200,
-  headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' },
-  });
-  } catch (error) {
-  console.error(error);
-  return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
-  status: 500,
-  headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' },
-  });
-  }
-  }
+  
 
 export async function DELETE(request) {
   try {
