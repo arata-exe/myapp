@@ -1,7 +1,9 @@
-"use client";
+'use client';
+
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Navbar = () => {
@@ -42,7 +44,13 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link href="/" className="navbar-brand">
-        <img src="/images/logo.png" alt="Logo" className="custom-logo" />
+        <Image
+          src="/images/logo.png"
+          alt="Logo"
+          width={100}  // Adjust as needed
+          height={50}  // Adjust as needed
+          className="custom-logo"
+        />
       </Link>
       <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
