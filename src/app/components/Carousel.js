@@ -27,9 +27,9 @@ const Carousel = () => {
             <Image
               src="/images/fc.png"
               alt="Slide 1"
-              layout="responsive"
-              width={1600}
-              height={900}  // Provide a specific height or use aspect ratio
+              layout=""
+              width={700}
+              height={300}  // Provide a specific height or use aspect ratio
               className="d-block mx-auto"
             />
           </div>

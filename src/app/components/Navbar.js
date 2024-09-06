@@ -15,17 +15,13 @@ const Navbar = () => {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
     // Redirect to the sign-in page
-    router.push('/login');
+    router.push('/signin');
   };
 
   useEffect(() => {
     // Check for token in localStorage
     const token = localStorage.getItem('token');
-    if (token) {
-      setIsLoggedIn(true);
-    } else {
-      router.push('/login');
-    }
+    setIsLoggedIn(!!token);
 
     // Add event listener for storage changes
     const handleStorageChange = () => {
