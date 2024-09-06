@@ -1,3 +1,4 @@
+// app/login/page.js
 'use client';
 
 import { useState } from 'react';
@@ -7,7 +8,6 @@ import Navbar from '../components/Navbar';
 export default function LoginPage() {
   const [username, setUserName] = useState('');
   const [password, setPassWord] = useState('');
-  const [error, setError] = useState(''); // Add error state
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -26,18 +26,16 @@ export default function LoginPage() {
       });
 
       if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.message || 'Network response was not ok');
+        throw new Error('Network response was not ok');
       }
 
       const result = await res.json();
-      localStorage.setItem('token', result.token); // Save token in localStorage
+      localStorage.setItem('token', result.token); // บันทึกโทเค็นใน localStorage
       alert('Login successful!');
       
-      router.push('/users'); // Use relative URL for internal navigation
+      router.push('https://frontend-self-eight-84.vercel.app/users'); // เปลี่ยนเส้นทางหลังจากล็อกอินสำเร็จ
     } catch (error) {
       console.error('Error during fetch:', error);
-      setError(error.message); // Set error message for user feedback
     }
   };
 
@@ -51,7 +49,6 @@ export default function LoginPage() {
             Login Form
           </div>
           <div className="card-body">
-            {error && <div className="alert alert-danger">{error}</div>} {/* Display error message */}
             <form className="row g-3" onSubmit={handleSubmit}>
               <div className="col-md-6">
                 <label htmlFor="username" className="form-label">Username</label>

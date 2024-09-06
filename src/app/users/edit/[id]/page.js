@@ -20,49 +20,35 @@ export default function Page({ params }) {
           return;
         }
         const data = await res.json();
-
-        if (Array.isArray(data) && data.length > 0) {
+        setItems(data);
+        if (data.length > 0) {
           const { firstname, lastname, username, password } = data[0];
           setFirstName(firstname);
           setLastName(lastname);
           setUserName(username);
           setPassWord(password);
-        } else {
-          console.warn('Data is not an array or empty');
         }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     }
 
-    if (id) {
-      getUsers();
-    }
+    getUsers();
   }, [id]);
 
   const handleUpdateSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const res = await fetch('https://myapp-backend-beige.vercel.app/api/users', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+    const res = await fetch('https://myapp-backend-beige.vercel.app/api/users', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id, firstname, lastname, username, password }),
+    });
 
-        body: JSON.stringify({ id, firstname, lastname, username, password }),
-      });
-
-      if (!res.ok) {
-        console.error('Failed to update data');
-        return;
-      }
-
-      const result = await res.json();
-      console.log(result);
-    } catch (error) {
-      console.error('Error updating data:', error);
-    }
+    const result = await res.json();
+    console.log(result);
   };
 
   return (
