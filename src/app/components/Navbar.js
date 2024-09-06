@@ -21,7 +21,11 @@ const Navbar = () => {
   useEffect(() => {
     // Check for token in localStorage
     const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token);
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      router.push('/signin');
+    }
 
     // Add event listener for storage changes
     const handleStorageChange = () => {
