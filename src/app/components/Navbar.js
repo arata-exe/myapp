@@ -1,18 +1,43 @@
-'use client';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
+"use client";
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import BootstrapClient from './BootstrapClient';
+import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from 'next/navigation';
 
-const Navbar = () => {
+const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
-  const token = localStorage.getItem('token'); // เช็ค token
 
   const handleLogout = () => {
-    // ลบ token ออกจาก localStorage
+    // Remove token from localStorage
     localStorage.removeItem('token');
-    router.push('/'); // นำทางไปที่หน้า home
+    setIsLoggedIn(false);
+    // Redirect to the home page
+    router.push('/signin');
   };
+
+  useEffect(() => {
+    // Check for token in localStorage
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      router.push('/signin');
+    }
+
+    // Add event listener for storage changes
+    const handleStorageChange = () => {
+      const token = localStorage.getItem('token');
+      setIsLoggedIn(!!token);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, [router]);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -54,6 +79,6 @@ const Navbar = () => {
       </div>
     </nav>
   );
-};
+
 
 export default Navbar;

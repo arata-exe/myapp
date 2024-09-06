@@ -16,7 +16,7 @@ export default function LoginPage() {
     const data = { username, password };
     
     try {
-      const res = await fetch('http://localhost:3000/api/login', {
+      const res = await fetch('https://myapp-backend-beige.vercel.app/api/login', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
