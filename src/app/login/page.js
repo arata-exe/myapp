@@ -1,4 +1,3 @@
-// app/login/page.js
 'use client';
 
 import { useState } from 'react';
@@ -8,6 +7,7 @@ import Navbar from '../components/Navbar';
 export default function LoginPage() {
   const [username, setUserName] = useState('');
   const [password, setPassWord] = useState('');
+  const [error, setError] = useState('');
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -26,7 +26,9 @@ export default function LoginPage() {
       });
 
       if (!res.ok) {
-        throw new Error('Network response was not ok');
+        // รับข้อความข้อผิดพลาดจากเซิร์ฟเวอร์ถ้ามี
+        const errorData = await res.json();
+        throw new Error(errorData.message || 'Network response was not ok');
       }
 
       const result = await res.json();
@@ -36,6 +38,7 @@ export default function LoginPage() {
       router.push('https://frontend-self-eight-84.vercel.app/users'); // เปลี่ยนเส้นทางหลังจากล็อกอินสำเร็จ
     } catch (error) {
       console.error('Error during fetch:', error);
+      setError(error.message);
     }
   };
 
@@ -82,6 +85,13 @@ export default function LoginPage() {
                   />
                 </div>
               </div>
+              {error && (
+                <div className="col-12">
+                  <div className="alert alert-danger">
+                    {error}
+                  </div>
+                </div>
+              )}
               <div className="col-12">
                 <button type="submit" className="btn btn-success">
                   <i className="bi bi-box-arrow-right"></i> Login
