@@ -1,18 +1,18 @@
 "use client";
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import BootstrapClient from './BootstrapClient';
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from 'next/navigation';
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const [isLoggedIn, setIsLoggedIn] = useState(false);
+const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
   const handleLogout = () => {
     // Remove token from localStorage
     localStorage.removeItem('token');
     setIsLoggedIn(false);
-    // Redirect to the home page
+    // Redirect to the sign-in page
     router.push('/signin');
   };
 
@@ -61,7 +61,7 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
           <li className="nav-item">
             <Link href="/Contact" className="nav-link">Contact</Link>
           </li>
-          {!token ? (
+          {!isLoggedIn ? (
             <>
               <li className="nav-item">
                 <Link href="/signup" className="btn btn-outline-success">SignUp</Link>
@@ -79,6 +79,6 @@ const [isLoggedIn, setIsLoggedIn] = useState(false);
       </div>
     </nav>
   );
-
+};
 
 export default Navbar;
