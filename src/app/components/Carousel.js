@@ -28,8 +28,8 @@ const Carousel = () => {
               src="/images/fc.png"
               alt="Slide 1"
               layout="responsive"
-              width={600}
-              height={auto}  // Provide a specific height or use aspect ratio
+              width={1600}
+              height={900}  // Provide a specific height or use aspect ratio
               className="d-block mx-auto"
             />
           </div>
@@ -40,7 +40,7 @@ const Carousel = () => {
             alt="Slide 2"
             layout="responsive"
             width={1600}
-            height={auto}  // Provide a specific height or use aspect ratio
+            height={900}  // Provide a specific height or use aspect ratio
             className="d-block mx-auto"
           />
           <div className="carousel-caption d-none d-md-block"></div>
@@ -51,7 +51,7 @@ const Carousel = () => {
             alt="Slide 3"
             layout="responsive"
             width={1600}
-            height={auto}  // Provide a specific height or use aspect ratio
+            height={900}  // Provide a specific height or use aspect ratio
             className="d-block mx-auto"
           />
           <div className="carousel-caption d-none d-md-block"></div>
