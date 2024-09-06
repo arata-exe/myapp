@@ -1,7 +1,8 @@
-'use client'; 
+'use client';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect } from 'react';
+import Image from 'next/image';
 
 const Carousel = () => {
   useEffect(() => {
@@ -20,21 +21,40 @@ const Carousel = () => {
       <div className="carousel-inner">
         <div className="carousel-item active">
           <video className="d-block w-100" autoPlay loop muted>
-            <source src="https://cdn-webth.garenanow.com/webth/cdn/fconline/mainsite/video_bg_mobile.mp4" type="video/mp4" /> 
+            <source src="https://cdn-webth.garenanow.com/webth/cdn/fconline/mainsite/video_bg_mobile.mp4" type="video/mp4" />
           </video>
-          <div className="carousel-caption d-md-block text-center" >
-            <img src="/images/fc.png" style={{ maxWidth: '600px', height: 'auto' }} alt="Slide 1" className="d-block w-100 mx-auto" />
+          <div className="carousel-caption d-md-block text-center">
+            <Image
+              src="/images/fc.png"
+              alt="Slide 1"
+              layout="responsive"
+              width={600}
+              height={auto}  // Provide a specific height or use aspect ratio
+              className="d-block mx-auto"
+            />
           </div>
         </div>
         <div className="carousel-item">
-          <img src="/images/slider2.jpg" className="d-block w-100 mx-auto" style={{ maxWidth: '1600px', height: 'auto' }} alt="Slide 2"/>
-          <div className="carousel-caption d-none d-md-block">
-          </div>
+          <Image
+            src="/images/slider2.jpg"
+            alt="Slide 2"
+            layout="responsive"
+            width={1600}
+            height={auto}  // Provide a specific height or use aspect ratio
+            className="d-block mx-auto"
+          />
+          <div className="carousel-caption d-none d-md-block"></div>
         </div>
         <div className="carousel-item">
-          <img src="/images/slider3.webp" className="d-block w-100 mx-auto "style={{ maxWidth: '1600px', height: 'auto' }} alt="Slide 3"/>
-          <div className="carousel-caption d-none d-md-block">
-          </div>
+          <Image
+            src="/images/slider3.webp"
+            alt="Slide 3"
+            layout="responsive"
+            width={1600}
+            height={auto}  // Provide a specific height or use aspect ratio
+            className="d-block mx-auto"
+          />
+          <div className="carousel-caption d-none d-md-block"></div>
         </div>
       </div>
       <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

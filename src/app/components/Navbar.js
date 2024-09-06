@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image'; // เพิ่ม import นี้
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Navbar = () => {
@@ -10,12 +9,15 @@ const Navbar = () => {
   const router = useRouter();
 
   const handleLogout = () => {
+    // Remove token from localStorage
     localStorage.removeItem('token');
     setIsLoggedIn(false);
+    // Redirect to the sign-in page
     router.push('/signin');
   };
 
   useEffect(() => {
+    // Check for token in localStorage
     const token = localStorage.getItem('token');
     if (token) {
       setIsLoggedIn(true);
@@ -23,6 +25,7 @@ const Navbar = () => {
       router.push('/signin');
     }
 
+    // Add event listener for storage changes
     const handleStorageChange = () => {
       const token = localStorage.getItem('token');
       setIsLoggedIn(!!token);
@@ -30,6 +33,7 @@ const Navbar = () => {
 
     window.addEventListener('storage', handleStorageChange);
 
+    // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
@@ -38,7 +42,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link href="/" className="navbar-brand">
-        <Image src="/images/logo.png" alt="Logo" className="custom-logo" width={150} height={50} />
+        <img src="/images/logo.png" alt="Logo" className="custom-logo" />
       </Link>
       <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
